@@ -1094,7 +1094,7 @@
                 return;
             }
             
-            let message = "Hola, estoy interesado en las siguientes cámaras de seguridad:";
+            let message = "Hola, estoy interesado en las siguientes cámaras de seguridad:\n\n";
             
             selectedProducts.forEach(product => {
                 message += `• ${product.name} - $${product.price.toFixed(2)}\n`;
@@ -1103,7 +1103,7 @@
             message += "\n¿Podrían darme más información sobre estos productos?";
             
             const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+            const whatsappUrl = `https://wa.me/593969182502?text=${encodedMessage}`;
             
             window.open(whatsappUrl, '_blank');
         }
@@ -1118,7 +1118,7 @@
             message += `¿Podrían darme más información sobre este producto?`;
             
             const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+            const whatsappUrl = `https://wa.me/593969182502?text=${encodedMessage}`;
             
             window.open(whatsappUrl, '_blank');
         }
