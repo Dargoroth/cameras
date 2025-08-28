@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cámaras de Seguridad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #e0e5ec;
+            --secondary-color: #a3b1c6;
+            --text-color: #4a5568;
+            --accent-color: #5e72e4;
+            --success-color: #2dce89;
+            --white: #ffffff;
+            --shadow-light: #ffffff;
+            --shadow-dark: #a3b1c6;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        /* Neumorphism Header */
+        header {
+            background: var(--primary-color);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+        }
+        .logo h1 {
+            font-size: 2rem;
+            color: var(--text-color);
+        }
+        /* Search and Filter Section */
+        .search-filter {
+            background: var(--primary-color);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border-radius: 50px;
+            border: none;
+            background: var(--primary-color);
+            box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-color);
+        }
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: var(--primary-color);
+            border: none;
+            border-radius: 15px;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            cursor: pointer;
+            box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+            background: var(--accent-color);
+            color: white;
+        }
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .product-card {
+            background: var(--primary-color);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Cambiado de cover a contain */
+            transition: transform 0.5s ease;
+            background-color: var(--primary-color); /* Fondo para espacios vacíos */
+        }
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50px;
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .product-info {
+            padding: 20px;
+        }
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+        .product-price {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .product-description {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--accent-color);
+            box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+        }
+        .btn-primary:hover {
+            box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+        }
+        .btn-secondary {
+            background: var(--primary-color);
+            color: var(--text-color);
+            box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+        }
+        .btn-secondary:hover {
+            box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+        }
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+            box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+        }
+        .btn-success:hover {
+            box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+        }
+        /* Selected Products Bar */
+        .selected-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            border-radius: 20px;
+            padding: 15px 25px;
+            box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 100;
+            max-width: 90%;
+            transition: all 0.3s ease;
+        }
+        .selected-bar.hidden {
+            transform: translateX(-50%) translateY(150%);
+        }
+        .selected-count {
+            background: var(--accent-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        /* Product Detail Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: var(--primary-color);
+            border-radius: 20px;
+            max-width: 800px; /* Reducido para mejor proporción */
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+        }
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+        .modal-header {
+            position: relative;
+            padding: 20px;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+        .modal-close:hover {
+            box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+        }
+        .modal-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column; /* Cambiado a diseño vertical */
+            gap: 25px;
+        }
+        /* Image Gallery */
+        .image-gallery {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+        .gallery-main {
+            width: 100%;
+            height: auto; /* Altura automática */
+            max-height: 350px; /* Altura máxima reducida */
+            object-fit: contain; /* Mostrar imagen completa */
+            border-radius: 15px;
+            background-color: var(--primary-color); /* Fondo para espacios vacíos */
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+        .gallery-main:hover {
+            transform: scale(1.02);
+        }
+        .gallery-thumbnails {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        .gallery-thumbnail {
+            width: 80px; /* Reducido para mejor equilibrio */
+            height: 60px; /* Reducido para mantener proporción */
+            object-fit: contain; /* Mostrar imagen completa */
+            border-radius: 10px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light);
+            background-color: var(--primary-color); /* Fondo para espacios vacíos */
+            flex-shrink: 0; /* Evitar que se encojan */
+        }
+        .gallery-thumbnail:hover,
+        .gallery-thumbnail.active {
+            opacity: 1;
+            box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+        }
+        /* Product Info Section */
+        .product-info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .product-title-price {
+            flex: 1;
+        }
+        .modal-info h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+        .modal-price {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        .modal-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--primary-color);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+        }
+        .modal-features {
+            margin-top: 5px;
+        }
+        .modal-features h3 {
+            margin-bottom: 15px;
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+        .modal-features ul {
+            list-style-type: none;
+            padding-left: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+        .modal-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px;
+            background: var(--primary-color);
+            border-radius: 10px;
+            box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+        }
+        .modal-features li i {
+            color: var(--success-color);
+            margin-top: 3px;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        /* Image Zoom Modal */
+        .zoom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .zoom-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .zoom-container {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        .zoom-image {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            display: block;
+            transform-origin: center center;
+        }
+        .zoom-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        .zoom-btn {
+            background: var(--primary-color);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+            transition: all 0.3s ease;
+            color: var(--text-color);
+        }
+        .zoom-btn:hover {
+            box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+        }
+        .zoom-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+            transition: all 0.3s ease;
+            color: var(--text-color);
+            z-index: 10;
+        }
+        .zoom-close:hover {
+            box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+        }
+        .zoom-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: var(--primary-color);
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+            z-index: 10;
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary-color);
+            color: var(--text-color);
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .modal-body {
+                padding: 15px;
+            }
+            
+            .gallery-main {
+                max-height: 250px;
+            }
+            
+            .modal-features ul {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-header {
+                flex-direction: column;
+            }
+            
+            .selected-bar {
+                width: 95%;
+            }
+            
+            .gallery-thumbnail {
+                width: 60px;
+                height: 45px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>Cámaras de Seguridad</h1>
+            </div>
+        </header>
+        <!-- Search and Filter -->
+        <div class="search-filter">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Buscar cámaras...">
+            </div>
+            <div class="filter-group">
+                <button class="filter-btn active" data-filter="all">Todas</button>
+                <button class="filter-btn" data-filter="interior">Interior</button>
+                <button class="filter-btn" data-filter="exterior">Exterior</button>
+            </div>
+        </div>
+        <!-- Products Grid -->
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be dynamically loaded here -->
+        </div>
+    </div>
+    <!-- Selected Products Bar -->
+    <div class="selected-bar hidden" id="selectedBar">
+        <div class="selected-count" id="selectedCount">0</div>
+        <span>Productos seleccionados</span>
+        <button class="btn btn-success" id="shareBtn">
+            <i class="fab fa-whatsapp"></i>
+            Compartir
+        </button>
+    </div>
+    <!-- Product Detail Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detalles del Producto</h2>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Image Zoom Modal -->
+    <div class="zoom-modal" id="zoomModal">
+        <div class="zoom-container">
+            <img src="" alt="Zoom" class="zoom-image" id="zoomImage">
+            <div class="zoom-info">
+                <span id="zoomLevel">100%</span> - Usa el ratón para mover la imagen
+            </div>
+            <div class="zoom-controls">
+                <button class="zoom-btn" id="zoomIn">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button class="zoom-btn" id="zoomOut">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button class="zoom-btn" id="zoomReset">
+                    <i class="fas fa-compress"></i>
+                </button>
+            </div>
+            <button class="zoom-close" id="zoomClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+    
+    <script>
+        // Product data - edit this directly to add/remove products
+        const products = [
+            {
+                id: 1,
+                name: "FJZKTEG Cámara IP WiFi de lente dual 4K",
+                price: 38.00,
+                category: "exterior",
+                images: [
+                    "https://i.postimg.cc/pLWPng9J/01.jpg",
+                    "https://i.postimg.cc/Kjh2cVSL/06.jpg",
+                    "https://i.postimg.cc/jjCKMP4W/02.jpg",
+                    "https://i.postimg.cc/7Lc4dhKK/03.jpg",
+                    "https://i.postimg.cc/DZXhThDn/05.jpg"
+                ],
+                description: "Cámara IP WiFi de lente dual 4K 8MP Visión nocturna Ai Human Detect PTZ Cámara de video al aire libre CCTV Protección de seguridad. Esta cámara de última generación ofrece una calidad de imagen excepcional con su resolución 4K de 8MP, permitiendo capturar cada detalle con nitidez impresionante. Su diseño de lente dual proporciona una cobertura completa, eliminando puntos ciegos y garantizando una vigilancia integral. La tecnología de detección humana de IA reduce significativamente las falsas alarmas, enviando notificaciones solo cuando se detecta actividad humana real. La función PTZ (Pan-Tilt-Zoom) ofrece flexibilidad excepcional, permitiendo controlar el ángulo de visión de forma remota para seguir objetos o personas de interés. Construida con materiales resistentes y diseño impermeable, esta cámara es ideal para instalación en exteriores, ofreciendo un rendimiento confiable en diversas condiciones climáticas.",
+                features: [
+                    "Calidad de imagen HD 4K 8MP",
+                    "Diseño de doble lente, cobertura completa",
+                    "Detección humana de IA, advertencia inteligente",
+                    "La función PTZ es flexible, el ángulo de visión se controla",
+                    "Diseño impermeable al aire libre, estable y confiable"
+                ]
+            },
+            {
+                id: 2,
+                name: "Cámara de vigilancia TAPO C100 Tp-Link",
+                price: 41.90,
+                category: "interior",
+                images: [
+                    "https://i.postimg.cc/XJ88XGt8/01.png",
+                    "https://i.postimg.cc/63wc9Lbq/02.png",
+                    "https://i.postimg.cc/Zn5LNYSh/03.png",
+                    "https://i.postimg.cc/WzYwwRNq/04.png"
+                ],
+                description: "Mantente Seguro.Cuándo y Dónde Sea. Cámara Wi-Fi de Seguridad para Casa. La cámara TP-Link TAPO C100 es la solución perfecta para la seguridad del hogar, combinando tecnología avanzada con facilidad de uso. Con su resolución 1080p, obtendrás imágenes nítidas como el cristal que te permitirán identificar detalles importantes con claridad. El sistema de detección de movimiento envía notificaciones instantáneas a tu smartphone cuando se detecta actividad, permitiéndote responder rápidamente a cualquier situación. La alarma de sonido y luz integrada puede activarse automáticamente para disuadir a intrusos, proporcionando una capa adicional de seguridad. Con su visión nocturna mejorada, la cámara mantiene un rendimiento excelente incluso en completa oscuridad, asegurando vigilancia las 24 horas. La opción de almacenamiento local te permite guardar las grabaciones en una tarjeta microSD, ofreciendo privacidad y acceso sin costos mensuales de suscripción.",
+                features: [
+                    "1080p. Imagen Nítida como el Cristal",
+                    "Detección de Movimiento",
+                    "Alarma de Sonido y luz",
+                    "Visión Nocturna",
+                    "Almacenamiento local"
+                ]
+            },
+            {
+                id: 3,
+                name: "Cámara de vigilancia MJSXJ03HL Mi Cámara 2K Xiaomi",
+                price: 49.91,
+                category: "interior",
+                images: [
+                    "https://i.postimg.cc/ZRcGZqHk/01.webp",
+                    "https://i.postimg.cc/Jnmf9Xbc/02.webp",
+                    "https://i.postimg.cc/5yKDYkDn/03.webp",
+                    "https://i.postimg.cc/PJ5BqkVC/04.webp",
+                    "https://i.postimg.cc/y6LMbkWc/05.webp"
+                ],
+                description: "Calidad de imagen 2K ultra clara | Visión nocturna por infrarrojos | Llamadas de voz bidireccionales︱ Detección de movimiento. La Mi Cámara 2K de Xiaomi representa el equilibrio perfecto entre tecnología avanzada y diseño elegante. Con su impresionante resolución 2K, cada imagen capturada es excepcionalmente clara y detallada, superando ampliamente las cámaras estándar 1080p. Los LEDs infrarrojos de alta calidad proporcionan una visión nocturna excepcional, permitiendo monitorear espacios incluso en completa oscuridad sin perder calidad de imagen. La función de llamadas de voz bidireccionales transforma la cámara en un dispositivo de comunicación, permitiéndote hablar con personas en tu hogar desde cualquier lugar. El sistema de detección de movimiento es altamente sensible y puede distinguir entre movimientos significativos y cambios menores, reduciendo falsas alarmas. El soporte magnético con rotación de 180° ofrece una flexibilidad increíble para posicionarla exactamente donde la necesites, y su instalación es tan simple que no requiere herramientas especiales.",
+                features: [
+                    "Calidad de imagen 2K",
+                    "Visión nocturna por infrarrojos",
+                    "Detección de movimiento",
+                    "Control inteligente con voz",
+                    "Fácil instalación",
+                    "Soporte magnético giratorio de 180°"
+                ]
+            },
+            {
+                id: 4,
+                name: "Cámara de Vigilancia TAPO C500 TP-Link",
+                price: 65.90,
+                category: "exterior",
+                images: [
+                    "https://i.postimg.cc/Prz2R7Sc/01.jpg",
+                    "https://i.postimg.cc/pLWqbB7d/02.jpg",
+                    "https://i.postimg.cc/wB323j98/03.jpg",
+                    "https://i.postimg.cc/P5SKtwsQ/04.jpg",
+                    "https://i.postimg.cc/SK5r9bKX/05.jpg",
+                    "https://i.postimg.cc/XJCgc1Zs/07.jpg",
+                    "https://i.postimg.cc/J03cSy5J/08.jpg",
+                    "https://i.postimg.cc/gjbHMy8m/09.jpg"
+                ],
+                description: "Protege tu Hogar y Familia 24 Horas al Día. La cámara TP-Link TAPO C500 redefine la vigilancia exterior con su combinación de características avanzadas y diseño robusto. Su video 1080p en directo ofrece imágenes y fotos excepcionalmente nítidas, capturando detalles cruciales que podrían ser vitales para la seguridad. La detección de movimiento impulsada por IA es revolucionaria; la cámara puede identificar específicamente personas y enviar notificaciones instantáneas a tu dispositivo móvil solo cuando se detecta actividad humana sospechosa, eliminando molestas falsas alarmas causadas por animales o cambios ambientales. La visión panorámica 360° es verdaderamente impresionante, con movimiento vertical de 130° y rotación horizontal de 360° que permite cubrir literalmente cada ángulo de tu propiedad sin puntos ciegos. La visión nocturna es excepcional, capaz de grabar con claridad incluso en total oscuridad a distancias de hasta 29 metros. Con su clasificación IP65, esta cámara está completamente protegida contra agua y polvo, garantizando un funcionamiento confiable en las condiciones climáticas más adversas. La libertad de instalación es total; puedes colocarla en paredes o techos según tus necesidades específicas de vigilancia.",
+                features: [
+                    "Video 1080p en directo: Videos y fotos más nítidos y con más detalles en cualquier situación",
+                    "Detección AI de movimiento con notificaciones: La cámara identifica personas y notificaciones al móvil al detectar un movimiento sospechoso",
+                    "Visión Panorámica 360º: La cámara se mueve vertical 130º y horizontalmente 360º para grabar todos los ángulos",
+                    "Vision Nocturna: Tapo C500 es capaz de grabar en total oscuridad a una distancia de hasta 29 metros",
+                    "Resistente al agua y al polvo IP65: La cámara está herméticamente sellada frente al agua y el polvo",
+                    "Libertad de instalación, en paredes o techos, tú decides donde"
+                ]
+            },
+            {
+                id: 5,
+                name: "Cámara de Vigilancia Inteligente para exterior 3mpx CCTV-235 Steren",
+                price: 94.00,
+                category: "exterior",
+                images: [
+                    "https://i.postimg.cc/7632ZFJr/01.webp",
+                    "https://i.postimg.cc/yx7SgL0g/02.webp",
+                    "https://i.postimg.cc/MT2Bx6TY/03.webp",
+                    "https://i.postimg.cc/nrT9vq1d/04.jpg",
+                    "https://i.postimg.cc/J7QXVWWb/05.jpg",
+                    "https://i.postimg.cc/YqqWtypT/06.webp",
+                    "https://i.postimg.cc/SNTzR7RR/07.webp",
+                    "https://i.postimg.cc/y82gX1Fz/08.webp",
+                    "https://i.postimg.cc/Gm4Ty8TQ/09.webp"
+                ],
+                description: "La cámara tiene 3 Mega pixeles de resolución, esto significa un 50% más que Full HD, por lo que podrás visualizar imágenes, como rostros o placas, con excelente nitidez y detalle. Esta cámara de vigilancia inteligente Steren representa el pináculo de la tecnología de seguridad para exteriores, ofreciendo una resolución de 3MP que supera en un 50% a las cámaras Full HD estándar. Esta mayor resolución es crucial para aplicaciones de seguridad serias, ya que permite identificar rostros, leer placas de vehículos y capturar detalles finos que serían imposibles de distinguir con cámaras de menor resolución. El seguidor de movimiento automático es una característica revolucionaria; la cámara puede detectar movimiento y automáticamente realizar un paneo para seguir el recorrido de personas o vehículos, asegurando que nunca pierdas de vista lo importante. Con un ángulo de visión de 70°, ofrece un equilibrio perfecto entre cobertura y detalle. La conectividad dual es excepcional; puedes conectarla mediante Wi-Fi para una instalación sencilla o mediante cable Ethernet para máxima estabilidad y velocidad. El sistema multiplataforma te permite controlar y visualizar las grabaciones desde múltiples dispositivos simultáneamente, ya sea a través de smartphones o navegadores web. Con una tarjeta microSD de 128 GB, la cámara puede grabar continuamente hasta 20 días, proporcionando un historial completo de eventos. La visión nocturna mejorada y la detección de movimiento inteligente completan un paquete de seguridad verdaderamente integral.",
+                features: [
+                    "Seguidor de movimiento: La cámara realiza un paneo y sigue el recorrido de algo o alguien",
+                    "Ángulo de visión: 70°",
+                    "Monitorea desde tu celular todo que sucede alrededor de tu casa o negocio",
+                    "Conexión por Wi-Fi o cable Ethernet",
+                    "Controla y visualiza la grabación desde más de un celular y navegador web",
+                    "Graba hasta 20 días con microSD de 128 GB",
+                    "Visión nocturna, detección de movimiento"
+                ]
+            },
+            {
+                id: 6,
+                name: "Cámara IP Gira 360° Smart Wifi Icsee Hd Dome, sistema externo, color blanco",
+                price: 30.00,
+                category: "exterior",
+                images: [
+                    "https://i.postimg.cc/rsZkkpJn/06.png",
+                    "https://i.postimg.cc/HsGGbFN7/01.png",
+                    "https://i.postimg.cc/521ZRLb4/02.png",
+                    "https://i.postimg.cc/CMnTBwcg/03.png",
+                    "https://i.postimg.cc/28nsG2p9/04.png",
+                    "https://i.postimg.cc/13HLhX3p/05.png"
+                ],
+                description: "Cámara de Seguridad IP. Esta cámara IP dome es la solución económica pero eficiente para tus necesidades de vigilancia exterior. Con su resolución HD 1080p, ofrece imágenes claras y detalladas que son perfectas para monitorear áreas exteriores como entradas, patios o estacionamientos. La capacidad de rotación de 360° combinada con el diseño dome proporciona una cobertura completa, permitiéndote vigilar un área amplia sin puntos ciegos. La conexión WiFi facilita la instalación, eliminando la necesidad de cables complicados y permitiendo colocar la cámara en ubicaciones estratégicas sin preocuparte por la proximidad a tomas de corriente o routers. Con soporte para tarjetas de memoria de hasta 64 GB, tendrás suficiente espacio para almacenar días de grabación, asegurando que no te pierdas ningún evento importante. El micrófono incorporado añade una capa adicional de seguridad, permitiéndote no solo ver sino también escuchar lo que sucede en el área monitoreada. La visión nocturna integrada garantiza que la cámara continúe funcionando eficazmente incluso durante la noche, proporcionando vigilancia las 24 horas del día, los 7 días de la semana.",
+                features: [
+                    "Resolución de cámara: HD 1080p",
+                    "Capacidad de almacenamiento de 64 GB",
+                    "Micrófono incluido",
+                    "Incluye visión nocturna"
+                ]
+            }
+        ];
+        
+        // Selected products
+        let selectedProducts = [];
+        
+        // Current product for zoom
+        let currentProduct = null;
+        let currentImageIndex = 0;
+        
+        // Zoom variables
+        let zoomLevel = 1;
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let translateX = 0;
+        let translateY = 0;
+        
+        // DOM Elements
+        const productsGrid = document.getElementById('productsGrid');
+        const selectedBar = document.getElementById('selectedBar');
+        const selectedCount = document.getElementById('selectedCount');
+        const shareBtn = document.getElementById('shareBtn');
+        const productModal = document.getElementById('productModal');
+        const modalClose = document.getElementById('modalClose');
+        const modalBody = document.getElementById('modalBody');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const toast = document.getElementById('toast');
+        
+        // Zoom modal elements
+        const zoomModal = document.getElementById('zoomModal');
+        const zoomImage = document.getElementById('zoomImage');
+        const zoomClose = document.getElementById('zoomClose');
+        const zoomIn = document.getElementById('zoomIn');
+        const zoomOut = document.getElementById('zoomOut');
+        const zoomReset = document.getElementById('zoomReset');
+        const zoomLevelDisplay = document.getElementById('zoomLevel');
+        
+        // Initialize the page
+        function init() {
+            renderProducts(products);
+            setupEventListeners();
+            updateSelectedBar();
+        }
+        
+        // Render products
+        function renderProducts(productsToRender) {
+            productsGrid.innerHTML = '';
+            
+            if (productsToRender.length === 0) {
+                productsGrid.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">No se encontraron productos.</p>';
+                return;
+            }
+            
+            productsToRender.forEach(product => {
+                const isSelected = selectedProducts.some(p => p.id === product.id);
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image" data-id="${product.id}">
+                        <img src="${product.images[0]}" alt="${product.name}">
+                        <span class="product-badge">${product.category.toUpperCase()}</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-price">$${product.price.toFixed(2)}</div>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-actions">
+                            <button class="btn btn-primary view-details" data-id="${product.id}">
+                                <i class="fas fa-eye"></i>
+                                Ver detalles
+                            </button>
+                            <button class="btn btn-secondary ${isSelected ? 'btn-success' : ''} select-product" data-id="${product.id}">
+                                <i class="fas ${isSelected ? 'fa-check' : 'fa-plus'}"></i>
+                                ${isSelected ? 'Seleccionado' : 'Seleccionar'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+            
+            // Add event listeners to the new buttons
+            document.querySelectorAll('.view-details').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = parseInt(e.currentTarget.getAttribute('data-id'));
+                    showProductDetails(productId);
+                });
+            });
+            
+            document.querySelectorAll('.select-product').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = parseInt(e.currentTarget.getAttribute('data-id'));
+                    toggleProductSelection(productId);
+                });
+            });
+            
+            // Add event listener to product images
+            document.querySelectorAll('.product-image').forEach(img => {
+                img.addEventListener('click', (e) => {
+                    const productId = parseInt(e.currentTarget.getAttribute('data-id'));
+                    showProductDetails(productId);
+                });
+            });
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Modal close
+            modalClose.addEventListener('click', closeModal);
+            productModal.addEventListener('click', (e) => {
+                if (e.target === productModal) closeModal();
+            });
+            
+            // Share button
+            shareBtn.addEventListener('click', shareProducts);
+            
+            // Search input
+            searchInput.addEventListener('input', filterProducts);
+            
+            // Filter buttons
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    e.currentTarget.classList.add('active');
+                    filterProducts();
+                });
+            });
+            
+            // Zoom modal controls
+            zoomClose.addEventListener('click', closeZoomModal);
+            zoomModal.addEventListener('click', (e) => {
+                if (e.target === zoomModal) closeZoomModal();
+            });
+            
+            zoomIn.addEventListener('click', () => {
+                zoomLevel = Math.min(zoomLevel + 0.25, 3);
+                updateZoom();
+            });
+            
+            zoomOut.addEventListener('click', () => {
+                zoomLevel = Math.max(zoomLevel - 0.25, 1);
+                updateZoom();
+            });
+            
+            zoomReset.addEventListener('click', () => {
+                zoomLevel = 1;
+                translateX = 0;
+                translateY = 0;
+                updateZoom();
+            });
+            
+            // Zoom image drag functionality
+            zoomImage.addEventListener('mousedown', startDrag);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', endDrag);
+            
+            // Zoom image wheel functionality
+            zoomImage.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? -0.1 : 0.1;
+                zoomLevel = Math.max(1, Math.min(3, zoomLevel + delta));
+                updateZoom();
+            });
+        }
+        
+        // Show product details
+        function showProductDetails(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            currentProduct = product;
+            currentImageIndex = 0;
+            
+            const isSelected = selectedProducts.some(p => p.id === product.id);
+            
+            // Create image gallery
+            let galleryHtml = `
+                <div class="image-gallery">
+                    <img src="${product.images[0]}" alt="${product.name}" class="gallery-main" id="galleryMain" data-index="0">
+                    <div class="gallery-thumbnails">
+            `;
+            
+            product.images.forEach((img, index) => {
+                galleryHtml += `
+                    <img src="${img}" alt="${product.name}" class="gallery-thumbnail ${index === 0 ? 'active' : ''}" data-index="${index}">
+                `;
+            });
+            
+            galleryHtml += `
+                    </div>
+                </div>
+            `;
+            
+            // Create product info section
+            let infoHtml = `
+                <div class="product-info-section">
+                    <div class="product-header">
+                        <div class="product-title-price">
+                            <h2>${product.name}</h2>
+                            <div class="modal-price">$${product.price.toFixed(2)}</div>
+                        </div>
+                    </div>
+                    <div class="modal-description">
+                        ${product.description}
+                    </div>
+                    <div class="modal-features">
+                        <h3>Características:</h3>
+                        <ul>
+                            ${product.features.map(feature => `
+                                <li><i class="fas fa-check-circle"></i> ${feature}</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-primary ${isSelected ? 'btn-success' : ''}" id="modalSelectBtn" data-id="${product.id}">
+                            <i class="fas ${isSelected ? 'fa-check' : 'fa-plus'}"></i>
+                            ${isSelected ? 'Seleccionado' : 'Seleccionar'}
+                        </button>
+                        <button class="btn btn-secondary" id="modalShareBtn" data-id="${product.id}">
+                            <i class="fab fa-whatsapp"></i>
+                            Compartir este producto
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            modalBody.innerHTML = galleryHtml + infoHtml;
+            
+            // Add event listeners to modal buttons
+            document.getElementById('modalSelectBtn').addEventListener('click', (e) => {
+                const productId = parseInt(e.currentTarget.getAttribute('data-id'));
+                toggleProductSelection(productId);
+                showProductDetails(productId); // Refresh modal
+            });
+            
+            document.getElementById('modalShareBtn').addEventListener('click', (e) => {
+                const productId = parseInt(e.currentTarget.getAttribute('data-id'));
+                shareSingleProduct(productId);
+            });
+            
+            // Add event listeners to gallery thumbnails
+            document.querySelectorAll('.gallery-thumbnail').forEach(thumbnail => {
+                thumbnail.addEventListener('click', (e) => {
+                    const index = parseInt(e.currentTarget.getAttribute('data-index'));
+                    const mainImage = document.getElementById('galleryMain');
+                    mainImage.src = product.images[index];
+                    mainImage.setAttribute('data-index', index);
+                    currentImageIndex = index;
+                    
+                    // Update active thumbnail
+                    document.querySelectorAll('.gallery-thumbnail').forEach(t => t.classList.remove('active'));
+                    e.currentTarget.classList.add('active');
+                });
+            });
+            
+            // Add event listener to main image for zoom
+            document.getElementById('galleryMain').addEventListener('click', (e) => {
+                const index = parseInt(e.currentTarget.getAttribute('data-index'));
+                openZoomModal(product.images[index]);
+            });
+            
+            productModal.classList.add('active');
+        }
+        
+        // Close modal
+        function closeModal() {
+            productModal.classList.remove('active');
+        }
+        
+        // Toggle product selection
+        function toggleProductSelection(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const index = selectedProducts.findIndex(p => p.id === productId);
+            if (index === -1) {
+                selectedProducts.push(product);
+                showToast('Producto agregado a la selección');
+            } else {
+                selectedProducts.splice(index, 1);
+                showToast('Producto eliminado de la selección');
+            }
+            
+            updateSelectedBar();
+            renderProducts(getFilteredProducts());
+        }
+        
+        // Update selected bar
+        function updateSelectedBar() {
+            selectedCount.textContent = selectedProducts.length;
+            
+            if (selectedProducts.length > 0) {
+                selectedBar.classList.remove('hidden');
+            } else {
+                selectedBar.classList.add('hidden');
+            }
+        }
+        
+        // Share products via WhatsApp
+        function shareProducts() {
+            if (selectedProducts.length === 0) {
+                showToast('No hay productos seleccionados');
+                return;
+            }
+            
+            let message = "Hola, estoy interesado en las siguientes cámaras de seguridad:\n\n";
+            
+            selectedProducts.forEach(product => {
+                message += `• ${product.name} - $${product.price.toFixed(2)}\n`;
+            });
+            
+            message += "\n¿Podrían darme más información sobre estos productos?";
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // Share single product via WhatsApp
+        function shareSingleProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            let message = `Hola, estoy interesado en esta cámara de seguridad:\n\n`;
+            message += `• ${product.name} - $${product.price.toFixed(2)}\n`;
+            message += `\n${product.description}\n\n`;
+            message += `¿Podrían darme más información sobre este producto?`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // Filter products
+        function filterProducts() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+            
+            let filtered = products;
+            
+            // Filter by category
+            if (activeFilter !== 'all') {
+                filtered = filtered.filter(product => product.category === activeFilter);
+            }
+            
+            // Filter by search term
+            if (searchTerm) {
+                filtered = filtered.filter(product => 
+                    product.name.toLowerCase().includes(searchTerm) || 
+                    product.description.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            renderProducts(filtered);
+        }
+        
+        // Get filtered products
+        function getFilteredProducts() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+            
+            let filtered = products;
+            
+            // Filter by category
+            if (activeFilter !== 'all') {
+                filtered = filtered.filter(product => product.category === activeFilter);
+            }
+            
+            // Filter by search term
+            if (searchTerm) {
+                filtered = filtered.filter(product => 
+                    product.name.toLowerCase().includes(searchTerm) || 
+                    product.description.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            return filtered;
+        }
+        
+        // Show toast notification
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Open zoom modal
+        function openZoomModal(imageSrc) {
+            zoomImage.src = imageSrc;
+            zoomLevel = 1;
+            translateX = 0;
+            translateY = 0;
+            updateZoom();
+            zoomModal.classList.add('active');
+        }
+        
+        // Close zoom modal
+        function closeZoomModal() {
+            zoomModal.classList.remove('active');
+        }
+        
+        // Update zoom
+        function updateZoom() {
+            zoomImage.style.transform = `scale(${zoomLevel}) translate(${translateX}px, ${translateY}px)`;
+            zoomLevelDisplay.textContent = `${Math.round(zoomLevel * 100)}%`;
+        }
+        
+        // Drag functions for zoom image
+        function startDrag(e) {
+            if (zoomLevel <= 1) return;
+            
+            isDragging = true;
+            dragStartX = e.clientX - translateX;
+            dragStartY = e.clientY - translateY;
+            zoomImage.style.cursor = 'grabbing';
+        }
+        
+        function drag(e) {
+            if (!isDragging) return;
+            
+            e.preventDefault();
+            translateX = e.clientX - dragStartX;
+            translateY = e.clientY - dragStartY;
+            updateZoom();
+        }
+        
+        function endDrag() {
+            isDragging = false;
+            zoomImage.style.cursor = zoomLevel > 1 ? 'grab' : 'default';
+        }
+        
+        // Initialize the page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
