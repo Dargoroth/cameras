@@ -17,22 +17,65 @@
             --shadow-light: #ffffff;
             --shadow-dark: #a3b1c6;
         }
+
+        body.dark-mode {
+            --primary-color: #1c1e21;
+            --secondary-color: #3b3e42;
+            --text-color: #e0e5ec;
+            --accent-color: #5e72e4;
+            --success-color: #2dce89;
+            --white: #1c1e21;
+            --shadow-light: #2c2e32;
+            --shadow-dark: #111214;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        
         body {
             background-color: var(--primary-color);
             color: var(--text-color);
             min-height: 100vh;
             padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode-toggle:hover {
+            box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+        }
+
+        .dark-mode-toggle i {
+            font-size: 1.5rem;
+            color: var(--text-color);
+        }
+
         /* Neumorphism Header */
         header {
             background: var(--primary-color);
@@ -43,20 +86,25 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
+        
         .logo {
             display: flex;
             align-items: center;
             gap: 15px;
         }
+        
         .logo i {
             font-size: 2.5rem;
             color: var(--accent-color);
         }
+        
         .logo h1 {
             font-size: 2rem;
             color: var(--text-color);
         }
+
         /* Search and Filter Section */
         .search-filter {
             background: var(--primary-color);
@@ -69,12 +117,15 @@
             gap: 15px;
             justify-content: space-between;
             align-items: center;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
+
         .search-box {
             flex: 1;
             min-width: 250px;
             position: relative;
         }
+
         .search-box input {
             width: 100%;
             padding: 12px 20px 12px 45px;
@@ -84,19 +135,24 @@
             box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
             font-size: 1rem;
             color: var(--text-color);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
+
         .search-box i {
             position: absolute;
             left: 15px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--secondary-color);
+            transition: color 0.3s ease;
         }
+        
         .filter-group {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
         }
+
         .filter-btn {
             background: var(--primary-color);
             border: none;
@@ -108,11 +164,13 @@
             box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
             transition: all 0.3s ease;
         }
+
         .filter-btn:hover, .filter-btn.active {
             box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
             background: var(--accent-color);
             color: white;
         }
+
         /* Products Grid */
         .products-grid {
             display: grid;
@@ -120,6 +178,7 @@
             gap: 25px;
             margin-bottom: 30px;
         }
+        
         .product-card {
             background: var(--primary-color);
             border-radius: 20px;
@@ -128,24 +187,29 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
+
         .product-card:hover {
             transform: translateY(-5px);
         }
+
         .product-image {
             height: 200px;
             overflow: hidden;
             position: relative;
         }
+
         .product-image img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Cambiado de cover a contain */
+            object-fit: contain;
             transition: transform 0.5s ease;
-            background-color: var(--primary-color); /* Fondo para espacios vacíos */
+            background-color: var(--primary-color);
         }
+
         .product-card:hover .product-image img {
             transform: scale(1.05);
         }
+
         .product-badge {
             position: absolute;
             top: 15px;
@@ -157,21 +221,25 @@
             font-size: 0.8rem;
             font-weight: bold;
         }
+
         .product-info {
             padding: 20px;
         }
+        
         .product-name {
             font-size: 1.3rem;
             font-weight: bold;
             margin-bottom: 10px;
             color: var(--text-color);
         }
+        
         .product-price {
             font-size: 1.5rem;
             color: var(--accent-color);
             font-weight: bold;
             margin-bottom: 15px;
         }
+
         .product-description {
             font-size: 0.9rem;
             color: var(--text-color);
@@ -181,10 +249,12 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+
         .product-actions {
             display: flex;
             justify-content: space-between;
         }
+
         .btn {
             padding: 10px 15px;
             border: none;
@@ -196,30 +266,37 @@
             align-items: center;
             gap: 8px;
         }
+        
         .btn-primary {
             background: var(--primary-color);
             color: var(--accent-color);
             box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
         }
+
         .btn-primary:hover {
             box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
         }
+
         .btn-secondary {
             background: var(--primary-color);
             color: var(--text-color);
             box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
         }
+
         .btn-secondary:hover {
             box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
         }
+        
         .btn-success {
             background: var(--success-color);
             color: white;
             box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
         }
+
         .btn-success:hover {
             box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
         }
+        
         /* Selected Products Bar */
         .selected-bar {
             position: fixed;
@@ -237,9 +314,11 @@
             max-width: 90%;
             transition: all 0.3s ease;
         }
+
         .selected-bar.hidden {
             transform: translateX(-50%) translateY(150%);
         }
+
         .selected-count {
             background: var(--accent-color);
             color: white;
@@ -251,6 +330,7 @@
             justify-content: center;
             font-weight: bold;
         }
+        
         /* Product Detail Modal */
         .modal {
             position: fixed;
@@ -267,14 +347,16 @@
             visibility: hidden;
             transition: all 0.3s ease;
         }
+
         .modal.active {
             opacity: 1;
             visibility: visible;
         }
+
         .modal-content {
             background: var(--primary-color);
             border-radius: 20px;
-            max-width: 800px; /* Reducido para mejor proporción */
+            max-width: 800px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
@@ -282,14 +364,17 @@
             transform: scale(0.7);
             transition: transform 0.3s ease;
         }
+
         .modal.active .modal-content {
             transform: scale(1);
         }
+
         .modal-header {
             position: relative;
             padding: 20px;
             border-bottom: 1px solid var(--secondary-color);
         }
+
         .modal-close {
             position: absolute;
             top: 20px;
@@ -306,34 +391,40 @@
             box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
             transition: all 0.3s ease;
         }
+
         .modal-close:hover {
             box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
         }
+
         .modal-body {
             padding: 20px;
             display: flex;
-            flex-direction: column; /* Cambiado a diseño vertical */
+            flex-direction: column;
             gap: 25px;
         }
+
         /* Image Gallery */
         .image-gallery {
             position: relative;
             overflow: hidden;
             border-radius: 15px;
         }
+
         .gallery-main {
             width: 100%;
-            height: auto; /* Altura automática */
-            max-height: 350px; /* Altura máxima reducida */
-            object-fit: contain; /* Mostrar imagen completa */
+            height: auto;
+            max-height: 350px;
+            object-fit: contain;
             border-radius: 15px;
-            background-color: var(--primary-color); /* Fondo para espacios vacíos */
+            background-color: var(--primary-color);
             cursor: zoom-in;
             transition: transform 0.3s ease;
         }
+
         .gallery-main:hover {
             transform: scale(1.02);
         }
+
         .gallery-thumbnails {
             display: flex;
             gap: 10px;
@@ -341,29 +432,33 @@
             overflow-x: auto;
             padding-bottom: 5px;
         }
+
         .gallery-thumbnail {
-            width: 80px; /* Reducido para mejor equilibrio */
-            height: 60px; /* Reducido para mantener proporción */
-            object-fit: contain; /* Mostrar imagen completa */
+            width: 80px;
+            height: 60px;
+            object-fit: contain;
             border-radius: 10px;
             cursor: pointer;
             opacity: 0.7;
             transition: opacity 0.3s ease;
             box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light);
-            background-color: var(--primary-color); /* Fondo para espacios vacíos */
-            flex-shrink: 0; /* Evitar que se encojan */
+            background-color: var(--primary-color);
+            flex-shrink: 0;
         }
+
         .gallery-thumbnail:hover,
         .gallery-thumbnail.active {
             opacity: 1;
             box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
         }
+
         /* Product Info Section */
         .product-info-section {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
+        
         .product-header {
             display: flex;
             justify-content: space-between;
@@ -371,19 +466,23 @@
             flex-wrap: wrap;
             gap: 15px;
         }
+        
         .product-title-price {
             flex: 1;
         }
+        
         .modal-info h2 {
             font-size: 1.8rem;
             margin-bottom: 10px;
             color: var(--text-color);
         }
+
         .modal-price {
             font-size: 1.8rem;
             color: var(--accent-color);
             font-weight: bold;
         }
+
         .modal-description {
             font-size: 1rem;
             line-height: 1.6;
@@ -393,14 +492,17 @@
             border-radius: 15px;
             box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
         }
+
         .modal-features {
             margin-top: 5px;
         }
+        
         .modal-features h3 {
             margin-bottom: 15px;
             color: var(--text-color);
             font-size: 1.2rem;
         }
+        
         .modal-features ul {
             list-style-type: none;
             padding-left: 0;
@@ -408,6 +510,7 @@
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 10px;
         }
+
         .modal-features li {
             display: flex;
             align-items: flex-start;
@@ -417,10 +520,12 @@
             border-radius: 10px;
             box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
         }
+
         .modal-features li i {
             color: var(--success-color);
             margin-top: 3px;
         }
+
         .modal-actions {
             display: flex;
             gap: 15px;
@@ -435,7 +540,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.7);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -444,10 +549,12 @@
             visibility: hidden;
             transition: all 0.3s ease;
         }
+        
         .zoom-modal.active {
             opacity: 1;
             visibility: visible;
         }
+        
         .zoom-container {
             position: relative;
             max-width: 90%;
@@ -456,6 +563,7 @@
             border-radius: 10px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
         }
+        
         .zoom-image {
             max-width: 100%;
             max-height: 80vh;
@@ -463,6 +571,7 @@
             display: block;
             transform-origin: center center;
         }
+        
         .zoom-controls {
             position: absolute;
             bottom: 20px;
@@ -472,6 +581,7 @@
             gap: 10px;
             z-index: 10;
         }
+        
         .zoom-btn {
             background: var(--primary-color);
             border: none;
@@ -486,9 +596,11 @@
             transition: all 0.3s ease;
             color: var(--text-color);
         }
+
         .zoom-btn:hover {
             box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
         }
+        
         .zoom-close {
             position: absolute;
             top: 20px;
@@ -507,9 +619,11 @@
             color: var(--text-color);
             z-index: 10;
         }
+
         .zoom-close:hover {
             box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
         }
+        
         .zoom-info {
             position: absolute;
             bottom: 20px;
@@ -538,6 +652,7 @@
             opacity: 0;
             transition: all 0.3s ease;
         }
+        
         .toast.show {
             transform: translateX(-50%) translateY(0);
             opacity: 1;
@@ -548,23 +663,18 @@
             .modal-body {
                 padding: 15px;
             }
-            
             .gallery-main {
                 max-height: 250px;
             }
-            
             .modal-features ul {
                 grid-template-columns: 1fr;
             }
-            
             .product-header {
                 flex-direction: column;
             }
-            
             .selected-bar {
                 width: 95%;
             }
-            
             .gallery-thumbnail {
                 width: 60px;
                 height: 45px;
@@ -573,15 +683,18 @@
     </style>
 </head>
 <body>
+    <div class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
     <div class="container">
-        <!-- Header -->
         <header>
             <div class="logo">
                 <i class="fas fa-shield-alt"></i>
                 <h1>Cámaras de Seguridad</h1>
             </div>
         </header>
-        <!-- Search and Filter -->
+
         <div class="search-filter">
             <div class="search-box">
                 <i class="fas fa-search"></i>
@@ -593,12 +706,11 @@
                 <button class="filter-btn" data-filter="exterior">Exterior</button>
             </div>
         </div>
-        <!-- Products Grid -->
+
         <div class="products-grid" id="productsGrid">
-            <!-- Products will be dynamically loaded here -->
-        </div>
+            </div>
     </div>
-    <!-- Selected Products Bar -->
+
     <div class="selected-bar hidden" id="selectedBar">
         <div class="selected-count" id="selectedCount">0</div>
         <span>Productos seleccionados</span>
@@ -607,7 +719,7 @@
             Compartir
         </button>
     </div>
-    <!-- Product Detail Modal -->
+
     <div class="modal" id="productModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -617,12 +729,10 @@
                 </button>
             </div>
             <div class="modal-body" id="modalBody">
-                <!-- Modal content will be dynamically loaded here -->
-            </div>
+                </div>
         </div>
     </div>
     
-    <!-- Image Zoom Modal -->
     <div class="zoom-modal" id="zoomModal">
         <div class="zoom-container">
             <img src="" alt="Zoom" class="zoom-image" id="zoomImage">
@@ -646,9 +756,8 @@
         </div>
     </div>
     
-    <!-- Toast Notification -->
     <div class="toast" id="toast"></div>
-    
+
     <script>
         // Product data - edit this directly to add/remove products
         const products = [
@@ -806,17 +915,12 @@
                     "Fácil de lograr visualización remota en tiempo real",
                     "Admite tarjeta Micro SD y servicio en la nube Inteligente"
                 ]
-            }            
+            }
         ];
         
-        // Selected products
         let selectedProducts = [];
-        
-        // Current product for zoom
         let currentProduct = null;
         let currentImageIndex = 0;
-        
-        // Zoom variables
         let zoomLevel = 1;
         let isDragging = false;
         let dragStartX = 0;
@@ -824,7 +928,6 @@
         let translateX = 0;
         let translateY = 0;
         
-        // DOM Elements
         const productsGrid = document.getElementById('productsGrid');
         const selectedBar = document.getElementById('selectedBar');
         const selectedCount = document.getElementById('selectedCount');
@@ -835,8 +938,6 @@
         const searchInput = document.getElementById('searchInput');
         const filterBtns = document.querySelectorAll('.filter-btn');
         const toast = document.getElementById('toast');
-        
-        // Zoom modal elements
         const zoomModal = document.getElementById('zoomModal');
         const zoomImage = document.getElementById('zoomImage');
         const zoomClose = document.getElementById('zoomClose');
@@ -845,14 +946,44 @@
         const zoomReset = document.getElementById('zoomReset');
         const zoomLevelDisplay = document.getElementById('zoomLevel');
         
-        // Initialize the page
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+
         function init() {
             renderProducts(products);
             setupEventListeners();
             updateSelectedBar();
+            loadDarkModeState();
         }
-        
-        // Render products
+
+        // --- Dark Mode Functions ---
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            updateDarkModeIcon(isDarkMode);
+        }
+
+        function loadDarkModeState() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+            }
+            updateDarkModeIcon(isDarkMode);
+        }
+
+        function updateDarkModeIcon(isDarkMode) {
+            const icon = darkModeToggle.querySelector('i');
+            if (isDarkMode) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+        // --- End Dark Mode Functions ---
+
         function renderProducts(productsToRender) {
             productsGrid.innerHTML = '';
             
@@ -889,7 +1020,6 @@
                 productsGrid.appendChild(productCard);
             });
             
-            // Add event listeners to the new buttons
             document.querySelectorAll('.view-details').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const productId = parseInt(e.currentTarget.getAttribute('data-id'));
@@ -904,7 +1034,6 @@
                 });
             });
             
-            // Add event listener to product images
             document.querySelectorAll('.product-image').forEach(img => {
                 img.addEventListener('click', (e) => {
                     const productId = parseInt(e.currentTarget.getAttribute('data-id'));
@@ -913,21 +1042,15 @@
             });
         }
         
-        // Setup event listeners
         function setupEventListeners() {
-            // Modal close
             modalClose.addEventListener('click', closeModal);
             productModal.addEventListener('click', (e) => {
                 if (e.target === productModal) closeModal();
             });
             
-            // Share button
             shareBtn.addEventListener('click', shareProducts);
-            
-            // Search input
             searchInput.addEventListener('input', filterProducts);
             
-            // Filter buttons
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     filterBtns.forEach(b => b.classList.remove('active'));
@@ -936,7 +1059,6 @@
                 });
             });
             
-            // Zoom modal controls
             zoomClose.addEventListener('click', closeZoomModal);
             zoomModal.addEventListener('click', (e) => {
                 if (e.target === zoomModal) closeZoomModal();
@@ -959,21 +1081,21 @@
                 updateZoom();
             });
             
-            // Zoom image drag functionality
             zoomImage.addEventListener('mousedown', startDrag);
             document.addEventListener('mousemove', drag);
             document.addEventListener('mouseup', endDrag);
             
-            // Zoom image wheel functionality
             zoomImage.addEventListener('wheel', (e) => {
                 e.preventDefault();
                 const delta = e.deltaY > 0 ? -0.1 : 0.1;
                 zoomLevel = Math.max(1, Math.min(3, zoomLevel + delta));
                 updateZoom();
             });
+
+            // New: Dark mode toggle event listener
+            darkModeToggle.addEventListener('click', toggleDarkMode);
         }
         
-        // Show product details
         function showProductDetails(productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
@@ -983,7 +1105,6 @@
             
             const isSelected = selectedProducts.some(p => p.id === product.id);
             
-            // Create image gallery
             let galleryHtml = `
                 <div class="image-gallery">
                     <img src="${product.images[0]}" alt="${product.name}" class="gallery-main" id="galleryMain" data-index="0">
@@ -1001,7 +1122,6 @@
                 </div>
             `;
             
-            // Create product info section
             let infoHtml = `
                 <div class="product-info-section">
                     <div class="product-header">
@@ -1036,11 +1156,10 @@
             
             modalBody.innerHTML = galleryHtml + infoHtml;
             
-            // Add event listeners to modal buttons
             document.getElementById('modalSelectBtn').addEventListener('click', (e) => {
                 const productId = parseInt(e.currentTarget.getAttribute('data-id'));
                 toggleProductSelection(productId);
-                showProductDetails(productId); // Refresh modal
+                showProductDetails(productId);
             });
             
             document.getElementById('modalShareBtn').addEventListener('click', (e) => {
@@ -1048,7 +1167,6 @@
                 shareSingleProduct(productId);
             });
             
-            // Add event listeners to gallery thumbnails
             document.querySelectorAll('.gallery-thumbnail').forEach(thumbnail => {
                 thumbnail.addEventListener('click', (e) => {
                     const index = parseInt(e.currentTarget.getAttribute('data-index'));
@@ -1057,13 +1175,11 @@
                     mainImage.setAttribute('data-index', index);
                     currentImageIndex = index;
                     
-                    // Update active thumbnail
                     document.querySelectorAll('.gallery-thumbnail').forEach(t => t.classList.remove('active'));
                     e.currentTarget.classList.add('active');
                 });
             });
             
-            // Add event listener to main image for zoom
             document.getElementById('galleryMain').addEventListener('click', (e) => {
                 const index = parseInt(e.currentTarget.getAttribute('data-index'));
                 openZoomModal(product.images[index]);
@@ -1072,12 +1188,10 @@
             productModal.classList.add('active');
         }
         
-        // Close modal
         function closeModal() {
             productModal.classList.remove('active');
         }
         
-        // Toggle product selection
         function toggleProductSelection(productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
@@ -1095,7 +1209,6 @@
             renderProducts(getFilteredProducts());
         }
         
-        // Update selected bar
         function updateSelectedBar() {
             selectedCount.textContent = selectedProducts.length;
             
@@ -1106,7 +1219,6 @@
             }
         }
         
-        // Share products via WhatsApp
         function shareProducts() {
             if (selectedProducts.length === 0) {
                 showToast('No hay productos seleccionados');
@@ -1127,7 +1239,6 @@
             window.open(whatsappUrl, '_blank');
         }
         
-        // Share single product via WhatsApp
         function shareSingleProduct(productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
@@ -1142,19 +1253,16 @@
             window.open(whatsappUrl, '_blank');
         }
         
-        // Filter products
         function filterProducts() {
             const searchTerm = searchInput.value.toLowerCase();
             const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
             
             let filtered = products;
             
-            // Filter by category
             if (activeFilter !== 'all') {
                 filtered = filtered.filter(product => product.category === activeFilter);
             }
             
-            // Filter by search term
             if (searchTerm) {
                 filtered = filtered.filter(product => 
                     product.name.toLowerCase().includes(searchTerm) || 
@@ -1165,19 +1273,16 @@
             renderProducts(filtered);
         }
         
-        // Get filtered products
         function getFilteredProducts() {
             const searchTerm = searchInput.value.toLowerCase();
             const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
             
             let filtered = products;
             
-            // Filter by category
             if (activeFilter !== 'all') {
                 filtered = filtered.filter(product => product.category === activeFilter);
             }
             
-            // Filter by search term
             if (searchTerm) {
                 filtered = filtered.filter(product => 
                     product.name.toLowerCase().includes(searchTerm) || 
@@ -1188,7 +1293,6 @@
             return filtered;
         }
         
-        // Show toast notification
         function showToast(message) {
             toast.textContent = message;
             toast.classList.add('show');
@@ -1198,7 +1302,6 @@
             }, 3000);
         }
         
-        // Open zoom modal
         function openZoomModal(imageSrc) {
             zoomImage.src = imageSrc;
             zoomLevel = 1;
@@ -1208,18 +1311,15 @@
             zoomModal.classList.add('active');
         }
         
-        // Close zoom modal
         function closeZoomModal() {
             zoomModal.classList.remove('active');
         }
         
-        // Update zoom
         function updateZoom() {
             zoomImage.style.transform = `scale(${zoomLevel}) translate(${translateX}px, ${translateY}px)`;
             zoomLevelDisplay.textContent = `${Math.round(zoomLevel * 100)}%`;
         }
         
-        // Drag functions for zoom image
         function startDrag(e) {
             if (zoomLevel <= 1) return;
             
@@ -1243,7 +1343,6 @@
             zoomImage.style.cursor = zoomLevel > 1 ? 'grab' : 'default';
         }
         
-        // Initialize the page when DOM is loaded
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
